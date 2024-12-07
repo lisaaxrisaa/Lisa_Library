@@ -37,7 +37,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import {
   useGetBookByIdQuery,
-  useCheckoutBookMutation,
+  useUpdateBookAvailabilityMutation,
 } from '../Slices/apiSlice';
 import { useSelector } from 'react-redux';
 
@@ -45,17 +45,26 @@ const SingleBook = () => {
   const { id } = useParams();
   const { data, isLoading, isError } = useGetBookByIdQuery(id);
   const book = data?.book;
-  const [checkoutBook] = useCheckoutBookMutation();
-  const user = useSelector((state) => state.auth.user);
+  const [updateBookAvailability] = useUpdateBookAvailabilityMutation();
+  // const user = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => state.auth.token);
+  // console.log('User:', user);
+  // console.log('Setting user:', user);
+
+  console.log('Book Data:', book);
 
   const handleCheckout = async () => {
-    if (!user) {
-      alert('You must be logged in to check out a book.');
+    if (!token) {
+      alert('Token is missing. Please log in again.');
       return;
     }
     try {
-      await checkoutBook({ bookId: id, userId: user.id }).unwrap();
+      await updateBookAvailability({
+        bookId: book.id,
+        available: false,
+      }).unwrap();
       alert('Book checked out successfully!');
+      // console.log('Checkout Result:', result);
     } catch (error) {
       console.error('Checkout failed:', error);
       alert('Failed to check out the book.');
@@ -75,8 +84,8 @@ const SingleBook = () => {
       <p>Description: {book.description}</p>
       <p>Available: {book.available ? 'Yes' : 'No'}</p>
       {book.available && (
-        <button onClick={handleCheckout} disabled={!user}>
-          {user ? 'Checkout' : 'Login to Checkout'}
+        <button onClick={handleCheckout} disabled={!token}>
+          Checkout
         </button>
       )}
     </>

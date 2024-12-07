@@ -90,7 +90,8 @@ import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    username: '',
+    firstname: '',
+    lastname: '',
     password: '',
     email: '',
   });
@@ -121,21 +122,21 @@ const Register = () => {
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Username:</label>
+          <label>First Name:</label>
           <input
             type="text"
-            name="username"
-            value={formData.username}
+            name="firstname"
+            value={formData.firstname}
             onChange={handleInputChange}
             required
           />
         </div>
         <div>
-          <label>Password:</label>
+          <label>Last Name:</label>
           <input
-            type="password"
-            name="password"
-            value={formData.password}
+            type="text"
+            name="lastname"
+            value={formData.lastname}
             onChange={handleInputChange}
             required
           />
@@ -146,6 +147,16 @@ const Register = () => {
             type="email"
             name="email"
             value={formData.email}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Password:</label>
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
             onChange={handleInputChange}
             required
           />

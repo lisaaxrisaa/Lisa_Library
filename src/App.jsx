@@ -20,6 +20,7 @@ const App = () => {
           <Route path="/books/:id" element={<SingleBook />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/account" element={<Account />} />
           <Route
             path="/account"
             element={

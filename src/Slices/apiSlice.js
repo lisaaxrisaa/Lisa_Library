@@ -1,9 +1,16 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const apiSlice = createApi({
-  reducerPath: 'api', // Unique key for the API slice in the Redux store
+  reducerPath: 'api',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api',
+    prepareHeaders: (headers, { getState }) => {
+      const token = getState().auth.token;
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     // Fetch all books
@@ -32,15 +39,41 @@ export const apiSlice = createApi({
     }),
     // Check out a book
     checkoutBook: builder.mutation({
-      query: (id) => ({
-        url: `/books/${id}/checkout`,
+      query: (bookId) => ({
+        url: `/reservations`,
         method: 'POST',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`, // Assuming token is stored in localStorage
+        },
+        body: { bookId },
+      }),
+    }),
+    getReservations: builder.query({
+      query: () => ({
+        url: '/reservations',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`, // or retrieve token from Redux store
+        },
+      }),
+    }),
+    updateBookAvailability: builder.mutation({
+      query: ({ bookId, available }) => ({
+        url: `/books/${bookId}`,
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: { available },
       }),
     }),
     returnBook: builder.mutation({
-      query: (id) => ({
-        url: `/books/${id}/return`,
-        method: 'POST',
+      query: (reservationId) => ({
+        url: `/reservations/${reservationId}`,
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
       }),
     }),
   }),
@@ -53,5 +86,7 @@ export const {
   useLoginUserMutation,
   useCheckoutBookMutation,
   useReturnBookMutation,
+  useUpdateBookAvailabilityMutation,
+  useGetReservationsQuery,
 } = apiSlice;
 export default apiSlice.reducer;
