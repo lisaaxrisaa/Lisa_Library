@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../Slices/authSlice';
-import { setUser } from '../Slices/authSlice';
+// import { setUser } from '../Slices/authSlice';
 
 // const Login = () => {
 //   const [credentials, setCredentials] = useState({
@@ -69,26 +69,25 @@ const Login = () => {
       console.log('Login Payload:', credentials);
       const response = await loginUser(credentials).unwrap();
       console.log('Login Response:', response);
-      const decodedToken = jwtDecode(response.token);
-      console.log('Token:', response.token);
-      console.log('Decoded Token:', decodedToken);
 
-      // Store token in Redux and localStorage
       const token = response.token;
-      const decoded = jwtDecode(token);
-      dispatch(setUser(decoded));
-      console.log('Dispatching user:', decoded);
-      console.log('Dispatching user:', decodedToken);
-      dispatch(setToken(response.token));
-      console.log('Dispatching token:', response.token);
-      localStorage.setItem('token', response.token);
 
-      alert(`Login successful! Welcome, ${decodedToken.email || 'User'}.`);
-      console.log('Navigating to /account');
+      if (!token) {
+        throw new Error('No token returned from login response');
+      }
+
+      // Dispatch setToken, which also decodes and stores the user
+      dispatch(setToken(token));
+      console.log('Token stored in Redux:', response.token);
+      // Optionally store token in localStorage for persistence
+      localStorage.setItem('token', token);
+
+      const decoded = jwtDecode(token);
+      alert(`Login successful! Welcome, ${decoded.email || 'User'}.`);
       navigate('/account');
     } catch (error) {
-      console.error('Error response:', error);
-      alert(`Login failed: ${error.data?.message || 'Unknown error'}`);
+      console.error('Login failed:', error);
+      alert(`Login failed: ${error.data?.message || error.message}`);
     }
   };
 

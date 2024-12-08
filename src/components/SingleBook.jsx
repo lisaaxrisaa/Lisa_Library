@@ -38,6 +38,7 @@ import { useParams } from 'react-router-dom';
 import {
   useGetBookByIdQuery,
   useUpdateBookAvailabilityMutation,
+  useLazyGetReservationsQuery,
 } from '../Slices/apiSlice';
 import { useSelector } from 'react-redux';
 
@@ -48,23 +49,33 @@ const SingleBook = () => {
   const [updateBookAvailability] = useUpdateBookAvailabilityMutation();
   // const user = useSelector((state) => state.auth.user);
   const token = useSelector((state) => state.auth.token);
+  const [refetchReservations] = useLazyGetReservationsQuery();
   // console.log('User:', user);
   // console.log('Setting user:', user);
 
+  console.log('Book ID:', id);
   console.log('Book Data:', book);
 
   const handleCheckout = async () => {
     if (!token) {
-      alert('Token is missing. Please log in again.');
+      alert('Please log in to check out this book.');
       return;
     }
+    console.log('Attempting Checkout with:', { bookId: id, available: false });
+
     try {
-      await updateBookAvailability({
-        bookId: book.id,
+      const response = await updateBookAvailability({
+        bookId: id,
         available: false,
       }).unwrap();
+      console.log('Checkout Response:', response);
+
+      // Refetch reservations after successful checkout
+      console.log('Refetching Reservations...');
+      const reservationsResponse = await refetchReservations();
+      console.log('Updated Reservations:', reservationsResponse);
+
       alert('Book checked out successfully!');
-      // console.log('Checkout Result:', result);
     } catch (error) {
       console.error('Checkout failed:', error);
       alert('Failed to check out the book.');
@@ -72,9 +83,13 @@ const SingleBook = () => {
   };
 
   if (isLoading) return <p>Loading book details...</p>;
-  if (isError)
+  if (isError || !book) {
+    console.error('Error or no book data:', { isError, book });
     return <p>Error loading book details. Please try again later.</p>;
+  }
   if (!book) return <p>Book not found.</p>;
+
+  console.log('Book Data:', book);
 
   return (
     <>
@@ -83,7 +98,7 @@ const SingleBook = () => {
       <p>Author: {book.author}</p>
       <p>Description: {book.description}</p>
       <p>Available: {book.available ? 'Yes' : 'No'}</p>
-      {book.available && (
+      {book.available && token && (
         <button onClick={handleCheckout} disabled={!token}>
           Checkout
         </button>
