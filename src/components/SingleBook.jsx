@@ -1,38 +1,5 @@
 /* TODO - add your code to create a functional React component that renders details for a single book. Fetch the book data from the provided API. You may consider conditionally rendering a 'Checkout' button for logged in users. */
 
-// import React from 'react';
-// import { useParams } from 'react-router-dom';
-// import { useGetBookByIdQuery } from '../store/slices/apiSlice';
-
-// const SingleBook = () => {
-//   const { id } = useParams(); // Get the book ID from the URL
-//   const { data: book, isLoading, isError } = useGetBookByIdQuery(id); // Use RTK Query hook
-
-//   if (isLoading) return <p>Loading book details...</p>;
-//   if (isError) return <p>Error loading book details.</p>;
-//   if (!book) return <p>No book found.</p>;
-
-//   return (
-//     <>
-//       <img src={book.coverimage} alt={book.title} />
-//       <h1>{book.title}</h1>
-//       <p>
-//         <strong>Author:</strong> {book.author}
-//       </p>
-//       <p>
-//         <strong>Description:</strong> {book.description}
-//       </p>
-//       <p>
-//         <strong>Available:</strong> {book.available ? 'Yes' : 'No'}
-//       </p>
-//       {book.available && <button>Checkout</button>}{' '}
-//       {/* Optional: Checkout button */}
-//     </>
-//   );
-// };
-
-// export default SingleBook;
-
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import {
@@ -41,44 +8,67 @@ import {
   useLazyGetReservationsQuery,
 } from '../Slices/apiSlice';
 import { useSelector } from 'react-redux';
+import { useState } from 'react';
 
 const SingleBook = () => {
   const { id } = useParams();
   const { data, isLoading, isError } = useGetBookByIdQuery(id);
   const book = data?.book;
   const [updateBookAvailability] = useUpdateBookAvailabilityMutation();
-  // const user = useSelector((state) => state.auth.user);
+  const [isCheckedOut, setIsCheckedOut] = useState(false);
   const token = useSelector((state) => state.auth.token);
   const [refetchReservations] = useLazyGetReservationsQuery();
-  // console.log('User:', user);
-  // console.log('Setting user:', user);
 
   console.log('Book ID:', id);
   console.log('Book Data:', book);
+
+  // const handleCheckout = async () => {
+  //   if (!token) {
+  //     alert('Please log in to check out this book.');
+  //     return;
+  //   }
+  //   console.log('Attempting Checkout with:', { bookId: id, available: false });
+
+  //   //   try {
+  //   //     const response = await updateBookAvailability({
+  //   //       bookId: id,
+  //   //       available: false,
+  //   //     }).unwrap();
+  //   //     console.log('Checkout Response:', response);
+
+  //   //     // Refetch reservations after successful checkout
+  //   //     console.log('Refetching Reservations...');
+  //   //     const reservationsResponse = await refetchReservations();
+  //   //     console.log('Updated Reservations:', reservationsResponse);
+
+  //   //     alert('Book checked out successfully!');
+  //   //   } catch (error) {
+  //   //     console.error('Checkout failed:', error);
+  //   //     alert('Failed to check out the book.');
+  //   //   }
+  //   // };
 
   const handleCheckout = async () => {
     if (!token) {
       alert('Please log in to check out this book.');
       return;
     }
-    console.log('Attempting Checkout with:', { bookId: id, available: false });
 
     try {
+      console.log('Attempting Checkout with:', { bookId: id });
       const response = await updateBookAvailability({
         bookId: id,
-        available: false,
+        available: false, // Marking the book as checked out
       }).unwrap();
       console.log('Checkout Response:', response);
 
       // Refetch reservations after successful checkout
-      console.log('Refetching Reservations...');
-      const reservationsResponse = await refetchReservations();
-      console.log('Updated Reservations:', reservationsResponse);
-
+      await refetchReservations();
       alert('Book checked out successfully!');
+      setIsCheckedOut(true);
     } catch (error) {
       console.error('Checkout failed:', error);
-      alert('Failed to check out the book.');
+      alert('Failed to check out the book. Please try again later.');
     }
   };
 
@@ -98,9 +88,22 @@ const SingleBook = () => {
       <p>Author: {book.author}</p>
       <p>Description: {book.description}</p>
       <p>Available: {book.available ? 'Yes' : 'No'}</p>
-      {book.available && token && (
+      {/* {book.available && token && (
         <button onClick={handleCheckout} disabled={!token}>
-          Checkout
+          {book.available ? 'Checkout' : 'Attempt Checkout'}
+        </button>
+      )} */}
+      {token && (
+        <button
+          onClick={handleCheckout}
+          disabled={isCheckedOut}
+          style={{
+            backgroundColor: isCheckedOut ? 'grey' : 'blue',
+            color: 'white',
+            cursor: isCheckedOut ? 'not-allowed' : 'pointer',
+          }}
+        >
+          {isCheckedOut ? 'Checked Out' : 'Checkout'}
         </button>
       )}
     </>
