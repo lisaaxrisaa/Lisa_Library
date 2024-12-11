@@ -119,50 +119,52 @@ const Register = () => {
 
   return (
     <>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>First Name:</label>
-          <input
-            type="text"
-            name="firstname"
-            value={formData.firstname}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Last Name:</label>
-          <input
-            type="text"
-            name="lastname"
-            value={formData.lastname}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <button type="submit">Register</button>
-      </form>
+      <h1 className="header">Register</h1>
+      <div className="scrollable-box">
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>First Name:</label>
+            <input
+              type="text"
+              name="firstname"
+              value={formData.firstname}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div>
+            <label>Last Name:</label>
+            <input
+              type="text"
+              name="lastname"
+              value={formData.lastname}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div>
+            <label>Email:</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div>
+            <label>Password:</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <button type="submit">Register</button>
+        </form>
+      </div>
     </>
   );
 };

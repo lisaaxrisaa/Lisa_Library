@@ -93,19 +93,32 @@
 // export default apiSlice.reducer;
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { jwtDecode } from 'jwt-decode';
 
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api',
     prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token; // Retrieve token from Redux state
+      const token = getState().auth.token;
       console.log('Redux Token:', token);
+
       if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
+        try {
+          const decodedToken = jwtDecode(token);
+          const isExpired = decodedToken.exp * 1000 < Date.now();
+
+          if (!isExpired) {
+            headers.set('Authorization', `Bearer ${token}`);
+          } else {
+            console.warn('Token is expired, not adding to headers.');
+          }
+        } catch (error) {
+          console.error('Failed to decode token:', error);
+        }
+      } else {
+        console.log('No token found in Redux state.');
       }
-      // headers.set('Content-Type', 'application/json');
-      console.log('Headers:', headers);
       return headers;
     },
   }),
@@ -139,7 +152,7 @@ export const apiSlice = createApi({
     }),
     getReservations: builder.query({
       query: () => {
-        console.log('Fetching reservations...'); // This works fine here
+        console.log('Fetching reservations...');
         return {
           url: '/reservations',
           method: 'GET',
