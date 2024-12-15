@@ -61,6 +61,7 @@ const Login = () => {
               required
             />
           </div>
+          <br />
           <div>
             <label>Password:</label>
             <input
@@ -71,6 +72,7 @@ const Login = () => {
               required
             />
           </div>
+          <br />
           <button type="submit">Login</button>
         </form>
       </div>

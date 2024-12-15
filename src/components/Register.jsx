@@ -132,6 +132,7 @@ const Register = () => {
               required
             />
           </div>
+          <br />
           <div>
             <label>Last Name:</label>
             <input
@@ -142,6 +143,7 @@ const Register = () => {
               required
             />
           </div>
+          <br />
           <div>
             <label>Email:</label>
             <input
@@ -152,6 +154,7 @@ const Register = () => {
               required
             />
           </div>
+          <br />
           <div>
             <label>Password:</label>
             <input
