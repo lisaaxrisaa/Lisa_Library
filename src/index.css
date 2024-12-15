@@ -15,6 +15,7 @@ html {
   text-align: center;
   color: #f5e1c8;
   margin-top: 10px;
+  text-shadow: 3px 3px 3px #4a1919;
 }
 
 /* Global Styles */
@@ -41,7 +42,6 @@ nav a:hover {
   text-decoration: underline;
 }
 
-/* Header */
 h1,
 h2,
 h3 {
@@ -49,10 +49,9 @@ h3 {
   font-family: 'Quintessential', cursive;
 }
 
-/* Buttons */
 button {
-  background-color: #4a774e; /* Dark green */
-  color: #f5e1c8; /* Warm beige text */
+  background-color: #4a774e;
+  color: #f5e1c8;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -62,10 +61,9 @@ button {
 }
 
 button:hover {
-  background-color: #7c4d3a; /* Burgundy */
+  background-color: #7c4d3a;
 }
 
-/* Inputs */
 input,
 textarea {
   border: 1px solid #6b4226;
@@ -74,16 +72,7 @@ textarea {
   max-width: 400px;
   border-radius: 5px;
   margin-bottom: 1rem;
-}
-
-.book-card img {
-  max-width: 100%;
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
-.book-card h3 {
-  color: #6b4226;
+  background-color: rgba(251, 246, 240, 0.7);
 }
 
 ul {
@@ -118,12 +107,16 @@ a:hover {
   text-align: center;
 }
 
+.page-title h2 {
+  color: #f5e1c8;
+  text-shadow: 3px 2px 2px #4a1919;
+}
+
 .scroll-box-container {
-  display: flex; /* Enables Flexbox */
-  justify-content: flex-start; /* Aligns children to the left */
-  align-items: flex-start; /* Aligns children to the top */
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
   padding: 20px;
-  /* height: 100vh; */
 }
 
 .scrollable-box {
@@ -147,11 +140,10 @@ a:hover {
 }
 
 .scrollable-box li {
-  margin-bottom: 15px;
-  padding: 10px;
+  padding: 7px;
   background-color: rgba(251, 246, 240, 0.6);
   border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px;
   font-family: 'Quintessential', cursive;
 }
 
@@ -160,16 +152,24 @@ a:hover {
   color: #6b4226;
 }
 
+.scrollable-box h1 {
+  color: #492c19;
+}
+
+.scrollable-box p {
+  color: #492c19;
+}
+
 .scrollable-box a h3 {
-  text-decoration: none; /* Removes underline from h3 inside a link */
+  text-decoration: none;
 }
 
 .scrollable-box a {
-  text-decoration: none; /* Ensure the link itself does not add the underline */
+  text-decoration: none;
 }
 
 .scrollable-box a:hover h3 {
-  text-decoration: underline; /* Optional: underline on hover for emphasis */
+  text-decoration: underline;
 }
 
 .scrollable-box img {

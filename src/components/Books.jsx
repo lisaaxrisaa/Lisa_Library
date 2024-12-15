@@ -25,7 +25,6 @@ const BookList = () => {
     <>
       <h1 className="header">Welcome to Lisa's Library</h1>
       <div className="page-title">
-        {' '}
         <input
           className="search-bar"
           type="text"
