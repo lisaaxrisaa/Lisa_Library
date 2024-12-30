@@ -21,22 +21,14 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log('Login Payload:', credentials);
       const response = await loginUser(credentials).unwrap();
-      console.log('Login Response:', response);
-
-      const token = response.token; // Extract token from response
+      const token = response.token;
       if (!token) {
         throw new Error('No token returned from login response');
       }
 
       dispatch(setToken(token));
-      console.log('Token stored in Redux:', token);
-
-      // Optionally store token in localStorage for persistence
       localStorage.setItem('token', token);
-
-      // Decode token for user information (optional)
       const decoded = jwtDecode(token);
       alert(`Login successful! Welcome, ${decoded.email || 'User'}.`);
       navigate('/account');

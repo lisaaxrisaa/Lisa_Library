@@ -31,7 +31,6 @@ const SingleBook = () => {
     }
 
     try {
-      console.log('Attempting Checkout with:', { bookId: id });
       await updateBookAvailability({
         bookId: id,
         available: false,

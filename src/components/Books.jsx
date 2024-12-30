@@ -14,7 +14,6 @@ const BookList = () => {
   if (isLoading) return <p>Loading books...</p>;
   if (isError) return <p>Error loading books.</p>;
 
-  // Extract the books array from the response
   const books = data?.books || [];
 
   const filteredBooks = books.filter((book) =>

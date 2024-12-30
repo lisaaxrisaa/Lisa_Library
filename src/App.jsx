@@ -21,7 +21,6 @@ const App = () => {
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        console.log(decodedToken);
         const isExpired = decodedToken.exp * 1000 < Date.now();
 
         if (isExpired) {

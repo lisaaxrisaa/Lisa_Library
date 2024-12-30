@@ -1,15 +1,19 @@
-# Lisa_Library
+📚 Lisa's Library
 
-=======
+🌟 Introduction Lisa's Library is an online library management system designed for book enthusiasts. Users can browse the catalog, check out books, and return them once done. The application offers a cozy, library-themed interface with secure user authentication.
 
-# Block 30 - Book Buddy
+Details on the API can be found 🔗 here.
 
-## Introduction
+✨ Features
 
-We are working with a new client who is wanting to design an online library for the public. Another Full Stack Solutions team has already built out the API, but we need your assistance in developing the front end to ensure on-time delivery to the client. When this is complete, please submit the link to the deployed application so I can share it with the client.
-
-Details on the API can be found 🔗 [here](https://fsa-book-buddy-b6e748d1380d.herokuapp.com/docs/)
-
-# book_club
-
-> > > > > > > ca887eb (Initial project set up, book list rendering on page, single book render, and registration set up)
+🔐 User Authentication: Secure login and registration with JWT.
+📖 Book Catalog: Browse, search, and filter books with a visually engaging UI.
+📚 Reservations: Authenticated users can check out and return books.
+🎨 Responsive Design: Styled with CSS and Bootstrap for a cozy, library-themed aesthetic.
+🚀 State Management: Utilized Redux Toolkit and RTK Query for API data and global state.
+🛠️ Technologies Used
+⚛️ React: Front-end library for building dynamic user interfaces.
+🗃️ Redux Toolkit: Efficient state management and API integration.
+🎨 CSS: Styled components for a clean and consistent look.
+🔑 JWT: Token-based authentication for secure user sessions.
+🌐 API: Integrated with a RESTful API for CRUD operations on books and users.

@@ -101,12 +101,10 @@ const Register = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    console.log('Updated Form Data:', { ...formData, [name]: value }); // Debugging log
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Payload:', formData); // Debugging log
     try {
       await createUser(formData).unwrap();
       alert('Registration successful! You can now log in.');
