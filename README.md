@@ -17,3 +17,6 @@ Details on the API can be found 🔗 here.
 🎨 CSS: Styled components for a clean and consistent look.
 🔑 JWT: Token-based authentication for secure user sessions.
 🌐 API: Integrated with a RESTful API for CRUD operations on books and users.
+
+Here is a preview of Lisa's Library homepage:
+![Lisa's Library Homepage](/public/img/Screenshot%202024-12-11%20at%201.46.27 PM.png)

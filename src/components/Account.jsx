@@ -81,7 +81,7 @@ const Account = () => {
     <>
       <div>
         <h1 className="header">Welcome, {firstname || email}</h1>
-        <h3>Your Checked-Out Books:</h3>
+        <h3 className="checkout">Your Checked-Out Books:</h3>
         <div className="scrollable-box">
           {checkedOutBooks.length > 0 ? (
             <ul>

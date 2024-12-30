@@ -51,6 +51,14 @@ h3 {
   font-family: 'Quintessential', cursive;
 }
 
+.checkout {
+  color: #f5e1c8;
+  text-shadow: 3px 2px 2px #4a1919;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 70px;
+}
+
 input,
 textarea {
   border: 1px solid #6b4226;
