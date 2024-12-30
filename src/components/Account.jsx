@@ -16,13 +16,11 @@ const Account = () => {
   const token = useSelector((state) => state.auth.token);
   const decodedToken = token ? jwtDecode(token) : {};
   const { email, firstname } = decodedToken;
-
   const {
     data: booksData,
     isLoading: loadingBooks,
     isError: booksError,
   } = useGetBooksQuery();
-
   const {
     data: reservationsData,
     isLoading: loadingReservations,
@@ -30,7 +28,6 @@ const Account = () => {
   } = useGetReservationsQuery(undefined, {
     skip: !token,
   });
-
   const [returnBook] = useReturnBookMutation();
 
   useEffect(() => {

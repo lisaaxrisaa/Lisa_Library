@@ -9,7 +9,7 @@ import { setToken } from '../Slices/authSlice';
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
-  const [loginUser, { isLoading }] = useLoginUserMutation();
+  const [loginUser] = useLoginUserMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
