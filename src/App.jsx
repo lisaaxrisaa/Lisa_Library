@@ -15,7 +15,6 @@ import Account from './components/Account';
 const App = () => {
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
-  console.log('Redux Token State:', token); // Debug token state
 
   useEffect(() => {
     if (token) {

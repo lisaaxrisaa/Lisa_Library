@@ -63,7 +63,6 @@ const Account = () => {
       const response = await returnBook(reservationId).unwrap();
       console.log('Book returned successfully:', response);
 
-      // Remove the returned book from the UI
       setCheckedOutBooks((prevBooks) =>
         prevBooks.filter((book) => book.reservationId !== reservationId)
       );

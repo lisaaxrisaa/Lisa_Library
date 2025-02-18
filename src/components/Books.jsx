@@ -7,7 +7,6 @@ import { useGetBooksQuery } from '../Slices/apiSlice';
 import { Link } from 'react-router-dom';
 
 const BookList = () => {
-  // const token = useSelector((state) => state.auth.token);
   const { data, isLoading, isError } = useGetBooksQuery();
   const [searchTerm, setSearchTerm] = useState('');
 
